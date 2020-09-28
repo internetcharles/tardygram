@@ -29,22 +29,22 @@ it('signup a user via POST', async () => {
 
 it('logs in a user via POST', async() => {
   const user = await UserService.create({
-    email: '123@123.com',
+    email: '1234@123.com',
     password: '123',
-    profile_photo_url: 'a.jpeg'
+    profilePhotoUrl: 'a.jpeg'
   });
 
   const response = await request(app)
     .post('/api/v1/auth/login')
     .send({
-      email: '123@123.com',
+      email: '1234@123.com',
       password: '123',
-      profile_photo_url: 'a.jpeg'
+      profilePhotoUrl: 'a.jpeg'
     });
 
     expect(response.body).toEqual({
       id: user.id,
-      email: '123@123.com',
+      email: '1234@123.com',
       profile_photo_url: 'a.jpeg'
     })
 
