@@ -98,7 +98,6 @@ describe('gram routes', () => {
   });
 
   it('finds all grams', async() => {
-
     const response = await request(app)
       .get('/api/v1/grams/');
 
@@ -110,5 +109,13 @@ describe('gram routes', () => {
       tags: expect.any(Array)
     })
   })
+
+  it('finds gram by id', async() => {
+    const gram = await Gram.findById(1);
+    const response = await request(app)
+      .get(`/api/v1/grams/1`);
+    console.log(gram)
+      expect(response.body).toEqual(gram);
+  });
 
 });
