@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const UserService = require('../lib/services/user-service');
 const { getAgent } = require('../data/data-helpers');
+const Gram = require('../lib/models/gram');
 
 describe('user routes', () => {
   beforeEach(() => {
@@ -23,7 +24,6 @@ describe('user routes', () => {
       id: expect.any(String),
       email: 'email@email.com',
       profile_photo_url: 'a.jpeg'
-
     });
   });
 
@@ -89,12 +89,26 @@ describe('gram routes', () => {
       });
 
     expect(response.body).toEqual({
-      id: "1",
-      userId: 1,
+      id: "501",
+      userId: 5,
       photoUrl: 'a.jpeg',
       caption: 'whoa!',
       tags: ['yo', 'wow']
     });
   });
+
+  it('finds all grams', async() => {
+
+    const response = await request(app)
+      .get('/api/v1/grams/');
+
+    expect(response.body).toContainEqual({
+      id: expect.any(String),
+      userId: expect.any(Number),
+      photoUrl: expect.any(String),
+      caption: expect.any(String),
+      tags: expect.any(Array)
+    })
+  })
 
 });

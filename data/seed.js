@@ -10,4 +10,13 @@ module.exports = async ({ userCount = 5, gramCount = 500 } = {}) => {
             profilePhotoUrl: 'a.jpeg'
         });
     }));
+
+    const grams = await Promise.all([...Array(gramCount)].map(() => {
+        return Gram.insert({
+            userId: chance.pickone(users).id,
+            photoUrl: `${chance.animal()}.jpeg`,
+            caption: `${chance.animal()}`,
+            tags: [`${chance.animal()}`, `${chance.animal()}`]
+        })
+    }))
 }
