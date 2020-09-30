@@ -101,13 +101,7 @@ describe('gram routes', () => {
     const response = await request(app)
       .get('/api/v1/grams/');
 
-    expect(response.body).toContainEqual({
-      id: expect.any(String),
-      userId: expect.any(Number),
-      photoUrl: expect.any(String),
-      caption: expect.any(String),
-      tags: expect.any(Array)
-    })
+    expect(response.body).toHaveLength(500);
   })
 
   it('finds gram by id', async() => {
@@ -115,7 +109,20 @@ describe('gram routes', () => {
     const response = await request(app)
       .get(`/api/v1/grams/1`);
     console.log(gram)
-      expect(response.body).toEqual(gram);
+      expect(response.body).toEqual([...gram]);
+  });
+
+  it('patches gram by id', async() => {
+    const newGram = {
+        photoUrl: 'Giraffe.jpeg',
+        caption: 'Bushshrike',
+        tags: [ 'Squirrel Monkey', 'Culpeo' ],
+    }
+    const response = await request(app)
+      .patch(`/api/v1/grams/1`)
+      .send(newGram);
+
+      expect(response.body).toEqual({ ...newGram, id: "1", userId: expect.any(Number) });
   });
 
 });
